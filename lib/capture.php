@@ -119,7 +119,7 @@ class PhotoboothCapture {
                 'output' => $output,
             ];
             $this->logger->addLogData($ErrorData);
-            if ($this->style === 'video') {
+            if ($this->style === 'video' || $this->style != 'video' && !file_exists($this->tmpFile)) {
                 $this->logger->logToFile();
                 $ErrorString = json_encode($ErrorData);
 
