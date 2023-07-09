@@ -136,6 +136,15 @@ try {
                     }
                 }
 
+                //rotate image before apply frame
+                
+                if ($config['picture']['rotation'] !== '0') {
+                    $imageHandler->resizeRotation = $config['picture']['rotation'];
+                    $imageResource = $imageHandler->rotateResizeImage($imageResource);
+                    if (!$imageResource) {
+                        throw new Exception('Error resizing resource.');
+                    }
+                }
                 if (($config['picture']['take_frame'] && !$isCollage) || ($editSingleCollage && $config['collage']['take_frame'] === 'always')) {
                     if (!$isCollage) {
                         $imageHandler->frameExtend = $config['picture']['extend_by_frame'];
@@ -154,13 +163,7 @@ try {
                     }
                 }
 
-                if ($config['picture']['rotation'] !== '0') {
-                    $imageHandler->resizeRotation = $config['picture']['rotation'];
-                    $imageResource = $imageHandler->rotateResizeImage($imageResource);
-                    if (!$imageResource) {
-                        throw new Exception('Error resizing resource.');
-                    }
-                }
+
             }
         }
         if ($config['keying']['enabled'] || $isChroma) {
